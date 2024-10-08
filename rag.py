@@ -52,7 +52,7 @@ for pdf_file in pdf_files:
     documents.extend(pdf_loader.load())  # Add documents to the list
 
 # Step 4: Split documents into chunks (helps with large documents)
-text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=100)
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
 docs = text_splitter.split_documents(documents)
 
 if not docs:
@@ -111,7 +111,7 @@ def generate_answer(query, context):
                 },
                 {"role": "user", "content": f"Question: {query} Context: {context}\n\nPlease provide a detailed and well-explained answer based on the given context."}
             ],
-            max_tokens=200,
+            max_tokens=400,
             temperature=0.7,
             top_p=0.9
         )
