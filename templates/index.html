@@ -10,21 +10,20 @@
 
         body {
             font-family: 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #a7ffeb, #e0f7fa);
+            background: linear-gradient(135deg, #6DD5FA, #FFFFFF);
             margin: 0;
-            padding: 20px;
+            padding: 0;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
-            min-height: 100vh;
+            align-items: center;
+            height: 100vh;
         }
 
         h1 {
-            color: #004d40;
+            color: #333;
             text-align: center;
             font-size: 2.5rem;
-            margin-bottom: 10px;
-            margin-top: 10px;
+            margin-bottom: 20px;
         }
 
         form {
@@ -33,29 +32,30 @@
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             text-align: center;
-            margin-top: 20px;
+            width: 90%;
+            max-width: 900px;
         }
 
         label {
             font-size: 1.2rem;
-            color: #00695c;
+            color: #333;
             margin-bottom: 10px;
             display: block;
         }
 
         input[type="text"] {
-            width: 85%; /* Wider from left to right */
-            height: 20px; /* Shorter from top to bottom */
-            padding: 8px;
-            font-size: 0.9rem;
-            border: 2px solid #4db6ac;
+            width: 100%;
+            height: 40px;
+            padding: 10px;
+            font-size: 1rem;
+            border: 2px solid #6DD5FA;
             border-radius: 5px;
-            margin-bottom: 15px;
-            margin-top: 5px;
+            margin-bottom: 20px;
+            box-sizing: border-box; /* Ensure padding doesn't affect width */
         }
 
         input[type="submit"] {
-            background-color: #26a69a;
+            background-color: #6DD5FA;
             color: white;
             padding: 12px 24px;
             font-size: 1.1rem;
@@ -66,35 +66,21 @@
         }
 
         input[type="submit"]:hover {
-            background-color: #00796b;
+            background-color: #3B5998;
         }
 
         h2 {
-            color: #004d40;
+            color: #333;
             margin-top: 20px;
         }
 
         p {
-            font-size: 1.2rem;
-            color: #333;
-            margin-top: 10px;
-        }
-
-        .answer-section {
-            margin-top: 30px;
-            padding: 20px;
-            background-color: #e0f2f1;
-            border-radius: 10px;
-            width: 95%; /* Increased width for more space */
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            font-size: 1rem;
+            color: #555;
         }
 
         /* Responsive Design */
         @media (max-width: 768px) {
-            input[type="text"] {
-                width: 100%;
-            }
-
             form {
                 padding: 20px;
             }
@@ -118,10 +104,8 @@
             <input type="submit" value="Submit">
         </form>
         {% if answer %}
-        <div class="answer-section">
             <h2>Answer:</h2>
             <p>{{ answer }}</p>
-        </div>
         {% endif %}
     </div>
 </body>
