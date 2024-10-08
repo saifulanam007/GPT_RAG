@@ -135,6 +135,6 @@ def rag(query):
 
 # Example usage of RAG function
 if __name__ == "__main__":
-    query = "What were the key points in the recent parliamentary debate on economic policies?"
+    query = "On 25 september during oral questions session what questions were asked about economy?"
     answer = rag(query)
     print(f"Final Answer: {answer}")
