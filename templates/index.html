@@ -5,84 +5,123 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RAG Web App</title>
     <style>
+        /* Import a professional Google font */
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #e0f7fa;
-            color: #004d40;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #a7ffeb, #e0f7fa);
             margin: 0;
             padding: 20px;
             display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
+            align-items: flex-start;
             min-height: 100vh;
         }
+
         h1 {
-            font-size: 2.5em;
-            color: #00796b;
-        }
-        form {
-            background-color: #f0f4c3;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-            width: 70%;
-        }
-        label, input[type="submit"] {
-            font-size: 1.2em;
             color: #004d40;
-        }
-        input[type="text"] {
-            width: 95%;
-            padding: 10px;
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
             margin-top: 10px;
-            margin-bottom: 20px;
-            border-radius: 5px;
-            border: 2px solid #80cbc4;
-            font-size: 1.1em;
         }
+
+        form {
+            background-color: #ffffff;
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        label {
+            font-size: 1.2rem;
+            color: #00695c;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        input[type="text"] {
+            width: 85%;
+            padding: 12px;
+            font-size: 1rem;
+            border: 2px solid #4db6ac;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            margin-top: 5px;
+        }
+
         input[type="submit"] {
-            background-color: #4db6ac;
+            background-color: #26a69a;
+            color: white;
+            padding: 12px 24px;
+            font-size: 1.1rem;
             border: none;
-            padding: 10px 20px;
             border-radius: 5px;
             cursor: pointer;
-            transition: background-color 0.3s;
+            transition: background-color 0.3s ease;
         }
+
         input[type="submit"]:hover {
             background-color: #00796b;
-            color: white;
         }
+
+        h2 {
+            color: #004d40;
+            margin-top: 20px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #333;
+            margin-top: 10px;
+        }
+
         .answer-section {
             margin-top: 30px;
             padding: 20px;
-            background-color: #d1c4e9;
+            background-color: #e0f2f1;
             border-radius: 10px;
-            width: 80%;
+            width: 90%;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
-        h2 {
-            font-size: 2em;
-            color: #5e35b1;
-        }
-        p {
-            font-size: 1.3em;
-            line-height: 1.5;
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            input[type="text"] {
+                width: 100%;
+            }
+
+            form {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            input[type="submit"] {
+                width: 100%;
+            }
         }
     </style>
 </head>
 <body>
-    <h1>Retrieve and Generate (RAG) Web App</h1>
-    <form method="POST">
-        <label for="query">Enter your question:</label><br><br>
-        <input type="text" id="query" name="query" placeholder="Type your query here..."><br><br>
-        <input type="submit" value="Submit">
-    </form>
-    {% if answer %}
-    <div class="answer-section">
-        <h2>Answer:</h2>
-        <p>{{ answer }}</p>
+    <div>
+        <h1>Retrieve and Generate (RAG) Web App</h1>
+        <form method="POST">
+            <label for="query">Enter your question:</label><br><br>
+            <input type="text" id="query" name="query" placeholder="Type your query here..."><br><br>
+            <input type="submit" value="Submit">
+        </form>
+        {% if answer %}
+        <div class="answer-section">
+            <h2>Answer:</h2>
+            <p>{{ answer }}</p>
+        </div>
+        {% endif %}
     </div>
-    {% endif %}
 </body>
 </html>
