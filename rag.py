@@ -5,6 +5,7 @@ from langchain_community.vectorstores import FAISS
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 import requests
+import glob
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
