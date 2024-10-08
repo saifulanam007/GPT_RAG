@@ -4,7 +4,7 @@ from langchain_community.embeddings import OpenAIEmbeddings
 from langchain_community.vectorstores import FAISS
 from langchain_community.document_loaders import PyPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-import glob
+import requests
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -14,9 +14,32 @@ openai_api_key = os.getenv("OPENAI_API_KEY")
 if not openai_api_key:
     raise ValueError("OpenAI API Key not found. Make sure it's set in the .env file.")
 
-# Step 1: Load documents (multiple PDFs from a folder)
-pdf_folder_path = r'C:\Users\Lenovo\Downloads\hocdedebate'  # Path to your folder containing multiple PDFs
-pdf_files = glob.glob(os.path.join(pdf_folder_path, "*.pdf"))  # Load all PDF files from the folder
+# Step 1: Define Google Drive PDF URLs
+pdf_urls = [
+    "https://drive.google.com/uc?export=download&id=1Eapn6DZe8XEw17Ym3AmbDfqcnELNUhtr",  
+    "https://drive.google.com/uc?export=download&id=1Kkfq-o_unq4izWkMR3OrorQaNc4mCaNh",  
+    "https://drive.google.com/uc?export=download&id=1EiS2WaLWtOHo8pYZqao3tz1EztU-iMKD"  
+]
+
+# Step 2: Download PDFs from Google Drive
+pdf_folder_path = './pdfs/'
+os.makedirs(pdf_folder_path, exist_ok=True)
+
+for pdf_url in pdf_urls:
+    file_id = pdf_url.split('=')[-1]
+    pdf_filename = os.path.join(pdf_folder_path, f"{file_id}.pdf")
+    
+    print(f"Downloading {pdf_filename} from {pdf_url}")
+    
+    response = requests.get(pdf_url)
+    if response.status_code == 200:
+        with open(pdf_filename, "wb") as f:
+            f.write(response.content)
+    else:
+        print(f"Failed to download {pdf_url}")
+
+# Step 3: Load downloaded PDF documents
+pdf_files = glob.glob(os.path.join(pdf_folder_path, "*.pdf"))
 
 if not pdf_files:
     raise FileNotFoundError(f"No PDF files found in the folder: {pdf_folder_path}")
@@ -27,10 +50,7 @@ for pdf_file in pdf_files:
     pdf_loader = PyPDFLoader(pdf_file)  # Load each PDF
     documents.extend(pdf_loader.load())  # Add documents to the list
 
-if not documents:
-    raise ValueError("No documents were loaded from the PDF files.")
-
-# Step 2: Split documents into chunks (helps with large documents)
+# Step 4: Split documents into chunks (helps with large documents)
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
 docs = text_splitter.split_documents(documents)
 
@@ -39,7 +59,7 @@ if not docs:
 
 print(f"Loaded {len(docs)} document chunks.")
 
-# Step 3: Initialize OpenAI embeddings with the API key
+# Step 5: Initialize OpenAI embeddings with the API key
 embedding_function = OpenAIEmbeddings(openai_api_key=openai_api_key)
 
 # Generate embeddings
@@ -56,10 +76,10 @@ if not embeddings:
 
 print(f"Generated embeddings for {len(embeddings)} document chunks.")
 
-# Step 4: Create FAISS vector store from documents using the OpenAI embeddings
+# Step 6: Create FAISS vector store from documents using the OpenAI embeddings
 vector_store = FAISS.from_documents(docs, embedding_function)
 
-# Step 5: Define a query function and search the vector store
+# Step 7: Define a query function and search the vector store
 def retrieve_documents(query, k=3):
     docs_and_scores = vector_store.similarity_search_with_score(query, k=k)
     
@@ -71,7 +91,7 @@ def retrieve_documents(query, k=3):
     
     return combined_content
 
-# Step 6: Generation using OpenAI (to create a detailed combined answer)
+# Step 8: Generation using OpenAI (to create a detailed combined answer)
 def generate_answer(query, context):
     try:
         response = openai.ChatCompletion.create(
@@ -99,7 +119,7 @@ def generate_answer(query, context):
         print(f"Error generating answer: {e}")
         return "An error occurred while generating the answer."
 
-# Step 7: RAG function (Retrieve and Generate combined answer)
+# Step 9: RAG function (Retrieve and Generate combined answer)
 def rag(query):
     retrieved_content = retrieve_documents(query)
     
