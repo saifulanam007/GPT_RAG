@@ -15,8 +15,9 @@
             padding: 0;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start; /* Aligning closer to the top */
             height: 100vh;
+            padding-top: 20px; /* Adjust this to control how close to the top */
         }
 
         h1 {
@@ -28,12 +29,12 @@
 
         form {
             background-color: #ffffff;
-            padding: 20px 40px;
+            padding: 10px 20px;
             border-radius: 10px;
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             text-align: center;
-            width: 90%;
-            max-width: 900px;
+            width: 100%; /* Makes form full width */
+            max-width: 1200px; /* Adjust for wider form */
         }
 
         label {
